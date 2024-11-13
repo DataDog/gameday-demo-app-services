@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">
+    Penpal Matchmaker
+</h1>
+<h2 class="subtitle">
+  Use our advanced algorithm to find your perfect penpal match!
+</h2>
+<a id="matchButton" class="button is-primary" href="{{ url_for('main.match_penpal') }}">Find My Match</a>
+{% endblock %}
