@@ -2,5 +2,5 @@ flask
 ddtrace>=2.9.3
 jsonify
 requests
-flask-login
+PyJWT 
 boto3

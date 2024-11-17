@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">
+    Welcome, {{ name }}!
+</h1>
+
+<h1>Find Your Penpal Match!</h1>
+<p>Tell us a little bit about yourself and we will find your perfect penpal match.</p>
+<form id="matchmakingForm">
+    <!-- Personal Information -->
+
+    <label for="hobbies">Hobbies (comma-separated):</label><br>
+    <input type="text" id="hobbies" name="hobbies"><br><br>
+
+    <label for="favoriteColor">Favorite Color:</label><br>
+    <input type="text" id="favoriteColor" name="favoriteColor"><br><br>
+
+    <label for="favoriteQuote">Favorite Quote:</label><br>
+    <textarea id="favoriteQuote" name="favoriteQuote" rows="3"></textarea><br><br>
+
+    <!-- External Data Links -->
+
+    <label for="profileUrl">Optional: Link to your social media profile or personal website so we can learn more about you. </label><br>
+    <p>Test your URL to get an AI generated summary of the insights that will be used from your profile.</p>
+    <input type="url" id="profileUrl" name="profileUrl">
+    <button type="button" id="test-profile-url">Test My URL</button><br><br>
+
+    <label for="photoUrl">Optional: Link to a photo that represents your personality or interests.</label><br>
+    <input type="url" id="photoUrl" name="photoUrl">
+    <button type="button" id="test-photo-url">Test My Photo URL</button><br><br>
+
+    <button type="submit" id="match-button">Match Me!</button>
+</form>
+
+<div id="result"></div>
+
+<script>
+// Handle the "Test My URL" for profile URL
+document.getElementById('test-profile-url').addEventListener('click', function(event) {
+  event.preventDefault();
+  const url = document.getElementById('profileUrl').value;
+  if (url) {
+    fetch('/match/test_user_url', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ url: url }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.summary) {
+        alert(`Summary of your personality link: ${data.summary}`);
+      } else {
+        alert(data.error || 'An error occurred. Please try again.');
+      }
+    })
+    .catch(() => {
+      alert('Error testing URL, please try again.');
+    });
+  } else {
+    alert('Please enter a valid URL.');
+  }
+});
+
+// Handle the "Test My URL" for photo URL
+document.getElementById('test-photo-url').addEventListener('click', function(event) {
+  event.preventDefault();
+  const url = document.getElementById('photoUrl').value;
+  if (url) {
+    fetch('/match/test_photo_url', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ url: url }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert(data.success);
+      } else {
+        alert(data.error || 'An error occurred. Please try again.');
+      }
+    })
+    .catch(() => {
+      alert('Error testing URL, please try again and make sure this photo is public.');
+    });
+  } else {
+    alert('Please enter a valid public URL.');
+  }
+});
+
+// Handle the "Match Me!" button
+document.getElementById('matchmakingForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent default form submission
+  const formData = new FormData(this);
+
+  // Collect data and send it to the match_penpal_post route
+  const data = Object.fromEntries(formData.entries());
+  fetch('/match/match_penpal', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+    document.getElementById('result').textContent = `Matched Penpal: ${JSON.stringify(data)}`;
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+    alert('Failed to match a penpal. Please try again.');
+  });
+});
+</script>
+{% endblock %}

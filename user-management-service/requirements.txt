@@ -1,0 +1,6 @@
+flask
+ddtrace>=2.9.3
+jsonify
+requests
+PyJWT 
+boto3
