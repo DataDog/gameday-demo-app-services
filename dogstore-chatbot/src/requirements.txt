@@ -1,0 +1,5 @@
+streamlit
+ddtrace
+python-json-logger
+requests
+flask
