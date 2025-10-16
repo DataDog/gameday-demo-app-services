@@ -12,13 +12,3 @@ _Find the DynamoDB table hidden there!_
 
 _Where parrots store their translations with care,_
 _That's where me next clue awaits, I swear!_
-
----
-
-**🗺️ What to do:**
-1. In the Software Catalog, you're viewing the **Parrot Translator** service
-2. Navigate to the **Relationships** tab
-3. Look for the DynamoDB table that this service writes to
-4. That table holds your next clue, buried like treasure in Davy Jones' locker!
-
-⚓ _Karl's hint: Services don't work alone, matey! They depend on databases, queues, and other services. The Relationships tab shows the whole crew!_
