@@ -1,5 +1,0 @@
-# AWS Configuration - local development credentials
-# TODO: Remove before deploying to production!
-AWS_ACCESS_KEY_ID = "EXAMPLE"
-AWS_SECRET_ACCESS_KEY = "EXAMPLEKEY"
-AWS_DEFAULT_REGION = "us-east-1"
