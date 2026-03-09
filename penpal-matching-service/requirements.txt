@@ -1,5 +1,5 @@
 flask
-ddtrace>=2.9.3
+ddtrace>=2.9.6
 jsonify
 requests
 PyJWT 
